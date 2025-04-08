@@ -19,18 +19,18 @@
       background-color: #fff;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     .logo {
       display: block;
       margin: 0 auto 10px;
-      max-width: 120px;
+      max-width: 130px;
     }
     .note {
-      background-color: #1d4c26;
+      background-color: #1f502e;
       color: white;
       padding: 12px;
-      border-radius: 8px;
+      border-radius: 10px;
       text-align: center;
       font-size: 15px;
       margin-bottom: 20px;
@@ -49,7 +49,7 @@
     .copy-icon {
       cursor: pointer;
       color: #7bbf50;
-      margin-right: 10px;
+      margin-left: 10px;
     }
     label {
       font-size: 14px;
@@ -59,28 +59,27 @@
     }
     input[type="text"] {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       font-size: 14px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
       background-color: #fafafa;
       direction: ltr;
       text-align: left;
     }
     .file-upload {
       width: 100%;
-      text-align: center;
-      margin: 15px 0;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 10px;
+      margin: 15px 0;
     }
     .upload-box {
       width: 60px;
       height: 60px;
       background-color: #ddd;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 36px;
       color: #555;
       line-height: 60px;
@@ -101,15 +100,14 @@
       width: 60px;
       height: 60px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid #ccc;
       display: none;
     }
     .file-note {
       font-size: 12px;
-      color: #555;
-      margin-top: 8px;
-      margin-bottom: 10px;
+      color: #666;
+      margin-bottom: 12px;
       text-align: center;
     }
     button {
@@ -118,7 +116,7 @@
       color: white;
       border: none;
       padding: 14px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
     }
@@ -126,40 +124,40 @@
 </head>
 <body>
   <div class="form-wrapper">
-    <img class="logo" src="https://www.cashplus.ma/sites/default/files/logo-cashplus.png" alt="CashPlus logo" /><div class="note">
+    <img class="logo" src="https://www.cashplus.ma/sites/default/files/logo-cashplus.png" alt="CashPlus logo"><div class="note">
   قبل تقديم الطلب، يرجى تحويل الأموال في غضون 10 دقائق<br>
   باستخدام معلومات الدفع المحددة أدناه.
 </div>
 
 <div class="info-box">
   <span>رقم الهاتف</span>
-  <span><span class="copy-icon" onclick="copyText('0603032807')">📋</span> 0603032807</span>
+  <span><span class="copy-icon" onclick="copyText('0603032807')">📋</span>0603032807</span>
 </div>
 <div class="info-box">
   <span>سبب التحويل</span>
-  <span><span class="copy-icon" onclick="copyText('SRV')">📋</span> SRV</span>
+  <span><span class="copy-icon" onclick="copyText('SRV')">📋</span>SRV</span>
 </div>
 
-<div class="info-box" style="flex-direction: column; align-items: flex-start;">
-  <span style="color:#444; font-size: 13px;">المبلغ (الحد الأدنى 500.00 / الحد الأقصى 10000.00 MAD)</span>
+<div style="font-size: 13px; color: #333; margin-bottom: 10px;">
+  المبلغ (الحد الأدنى 500.00 / الحد الأقصى 10000.00 MAD)
 </div>
 
 <form id="transferForm">
   <label>المبلغ:</label>
-  <input type="text" name="amount" />
+  <input type="text" name="amount" inputmode="decimal">
 
   <label>رقم الهاتف الخاص بك Cash Plus:</label>
-  <input type="text" name="phone" required />
+  <input type="text" name="phone" required>
 
   <label>اسمك الكامل في Cash Plus:</label>
-  <input type="text" name="fullname" required />
+  <input type="text" name="fullname" required>
 
   <div class="file-upload">
     <div class="upload-box" id="uploadBox">
       +
-      <input type="file" name="screenshot" id="screenshot" accept="image/*" required />
+      <input type="file" name="screenshot" id="screenshot" accept="image/*" required>
     </div>
-    <img id="previewImg" class="preview-img" />
+    <img id="previewImg" class="preview-img">
   </div>
 
   <div class="file-note">
