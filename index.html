@@ -10,7 +10,7 @@
     }
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #e5efe5;
+      background-color: #f2f2f2;
       margin: 0;
       padding: 0;
       direction: rtl;
@@ -22,6 +22,7 @@
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
     }
     .logo {
       display: block;
@@ -29,21 +30,29 @@
       max-width: 120px;
     }
     .note {
-      background-color: #2f6932;
+      background-color: #1d4c26;
       color: white;
-      padding: 10px;
+      padding: 12px;
       border-radius: 8px;
       text-align: center;
-      font-size: 14px;
-      margin-bottom: 15px;
+      font-size: 15px;
+      margin-bottom: 20px;
     }
     .info-box {
-      font-size: 16px;
+      font-size: 15px;
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     .info-box span {
       font-weight: bold;
-      color: #2f6932;
+      color: #1d4c26;
+    }
+    .copy-icon {
+      cursor: pointer;
+      color: #7bbf50;
+      margin-right: 10px;
     }
     label {
       font-size: 14px;
@@ -51,25 +60,46 @@
       margin: 10px 0 5px;
     }
     input[type="text"],
-    input[type="number"],
-    input[type="file"] {
+    input[type="number"] {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 6px;
+      background-color: #fafafa;
+    }
+    .file-upload {
+      width: 100%;
+      text-align: center;
+      margin: 15px 0;
+    }
+    .file-upload input[type="file"] {
+      display: none;
+    }
+    .file-upload label {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      background-color: #ddd;
+      border-radius: 8px;
+      font-size: 36px;
+      line-height: 60px;
+      color: #555;
+      cursor: pointer;
     }
     .file-note {
       font-size: 12px;
-      color: #666;
+      color: #555;
+      margin-top: -10px;
       margin-bottom: 10px;
+      text-align: center;
     }
     button {
       width: 100%;
-      background-color: #2f6932;
+      background-color: #1d4c26;
       color: white;
       border: none;
-      padding: 12px;
+      padding: 14px;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
@@ -84,28 +114,46 @@
 </div>
 
 <div class="info-box">
-  <span>رقم الحساب:</span> 0697934587
+  <span>رقم الهاتف</span>
+  <span>
+    <span class="copy-icon" onclick="copyText('0603032807')">📋</span>
+    0603032807
+  </span>
 </div>
 <div class="info-box">
-  <span>سبب التحويل:</span> SRV
+  <span>سبب التحويل</span>
+  <span>
+    <span class="copy-icon" onclick="copyText('SRV')">📋</span>
+    SRV
+  </span>
+</div>
+
+<div class="info-box" style="flex-direction: column; align-items: flex-start;">
+  <span style="color:#444; font-size: 13px;">/ MAD 500.00 (الحد الأدنى)</span>
+  <span style="color:#444; font-size: 13px;">(MAD 10,000.00 الحد الأقصى)</span>
 </div>
 
 <form id="transferForm">
   <label>المبلغ</label>
   <input type="number" name="amount" required />
 
-  <label>رقم الهاتف</label>
+  <label>رقم الهاتف الخاص بك:</label>
   <input type="text" name="phone" required />
 
-  <label>الاسم الكامل</label>
+  <label>اسمك الكامل:</label>
   <input type="text" name="fullname" required />
 
-  <label>إرفاق لقطة شاشة</label>
-  <input type="file" name="screenshot" accept="image/*" required />
+  <div class="file-upload">
+    <input type="file" name="screenshot" id="screenshot" accept="image/*" required />
+    <label for="screenshot">+</label>
+  </div>
 
-  <div class="file-note">(.jpg, .jpeg, .png فقط - حتى 2 ميغابايت)</div>
+  <div class="file-note">
+    تنبيه: يرجى تحميل لقطة شاشة للتحويل المصرفي الناجح<br>
+    (.jpg, .jpeg, .png, .pdf) الحجم الأقصى للملف هو 20 ميغا بايت
+  </div>
 
-  <button type="submit">تأكيد</button>
+  <button type="submit">التأكيد</button>
 </form>
 
   </div>  <script>
@@ -144,5 +192,10 @@
 
       reader.readAsDataURL(file);
     });
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text);
+      alert("تم نسخ: " + text);
+    }
   </script></body>
 </html>
