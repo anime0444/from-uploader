@@ -144,10 +144,10 @@
 
 <form id="transferForm">
   <label>المبلغ:</label>
-  <input type="text" name="amount" inputmode="decimal">
+  <input type="text" name="amount" inputmode="decimal" pattern="^[0-9.]+$" placeholder="20.00">
 
   <label>رقم الهاتف الخاص بك Cash Plus:</label>
-  <input type="text" name="phone" required>
+  <input type="text" name="phone" pattern="^[0-9]{10}$" maxlength="10" placeholder="مثال: 0600000000" required>
 
   <label>اسمك الكامل في Cash Plus:</label>
   <input type="text" name="fullname" required>
@@ -188,17 +188,32 @@
 
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
+
+      const amount = form.amount.value.trim();
+      const phone = form.phone.value.trim();
+
+      if (!/^[0-9.]+$/.test(amount)) {
+        alert("المرجو إدخال مبلغ صحيح بالأرقام فقط.");
+        return;
+      }
+
+      if (!/^\d{10}$/.test(phone)) {
+        alert("رقم الهاتف يجب أن يتكون من 10 أرقام.");
+        return;
+      }
+
       const file = fileInput.files[0];
       if (!file) {
         alert("يرجى اختيار صورة");
         return;
       }
+
       const reader = new FileReader();
       reader.onload = async function () {
         const base64Image = reader.result;
         const formData = new FormData();
-        formData.append("amount", form.amount.value);
-        formData.append("phone", form.phone.value);
+        formData.append("amount", amount);
+        formData.append("phone", phone);
         formData.append("fullname", form.fullname.value);
         formData.append("imageBase64", base64Image);
 
