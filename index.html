@@ -1,13 +1,11 @@
 <!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>نموذج الإيداع</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #f2f2f2;
@@ -22,7 +20,6 @@
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      position: relative;
     }
     .logo {
       display: block;
@@ -59,38 +56,58 @@
       display: block;
       margin: 10px 0 5px;
     }
-    input[type="text"],
-    input[type="number"] {
+    input[type="text"], input[type="number"] {
       width: 100%;
-      padding: 12px;
+      padding: 8px;
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 6px;
       background-color: #fafafa;
+      direction: ltr;
+      text-align: left;
     }
     .file-upload {
       width: 100%;
       text-align: center;
       margin: 15px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
     }
-    .file-upload input[type="file"] {
-      display: none;
-    }
-    .file-upload label {
-      display: inline-block;
+    .upload-box {
       width: 60px;
       height: 60px;
       background-color: #ddd;
       border-radius: 8px;
       font-size: 36px;
-      line-height: 60px;
       color: #555;
+      line-height: 60px;
+      text-align: center;
+      position: relative;
       cursor: pointer;
+    }
+    .upload-box input[type="file"] {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+    }
+    .preview-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      display: none;
     }
     .file-note {
       font-size: 12px;
       color: #555;
-      margin-top: -10px;
+      margin-top: 8px;
       margin-bottom: 10px;
       text-align: center;
     }
@@ -115,17 +132,11 @@
 
 <div class="info-box">
   <span>رقم الهاتف</span>
-  <span>
-    <span class="copy-icon" onclick="copyText('0603032807')">📋</span>
-    0603032807
-  </span>
+  <span><span class="copy-icon" onclick="copyText('0603032807')">📋</span> 0603032807</span>
 </div>
 <div class="info-box">
   <span>سبب التحويل</span>
-  <span>
-    <span class="copy-icon" onclick="copyText('SRV')">📋</span>
-    SRV
-  </span>
+  <span><span class="copy-icon" onclick="copyText('SRV')">📋</span> SRV</span>
 </div>
 
 <div class="info-box" style="flex-direction: column; align-items: flex-start;">
@@ -135,7 +146,7 @@
 
 <form id="transferForm">
   <label>المبلغ</label>
-  <input type="number" name="amount" required />
+  <input type="number" name="amount" />
 
   <label>رقم الهاتف الخاص بك:</label>
   <input type="text" name="phone" required />
@@ -144,8 +155,11 @@
   <input type="text" name="fullname" required />
 
   <div class="file-upload">
-    <input type="file" name="screenshot" id="screenshot" accept="image/*" required />
-    <label for="screenshot">+</label>
+    <div class="upload-box" id="uploadBox">
+      +
+      <input type="file" name="screenshot" id="screenshot" accept="image/*" required />
+    </div>
+    <img id="previewImg" class="preview-img" />
   </div>
 
   <div class="file-note">
@@ -158,22 +172,32 @@
 
   </div>  <script>
     const form = document.getElementById('transferForm');
+    const fileInput = document.getElementById('screenshot');
+    const previewImg = document.getElementById('previewImg');
+    const uploadBox = document.getElementById('uploadBox');
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'inline-block';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
 
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
-
-      const fileInput = form.screenshot;
       const file = fileInput.files[0];
-
       if (!file) {
         alert("يرجى اختيار صورة");
         return;
       }
-
       const reader = new FileReader();
       reader.onload = async function () {
         const base64Image = reader.result;
-
         const formData = new FormData();
         formData.append("amount", form.amount.value);
         formData.append("phone", form.phone.value);
@@ -188,8 +212,8 @@
         const result = await response.text();
         alert(result);
         form.reset();
+        previewImg.style.display = 'none';
       };
-
       reader.readAsDataURL(file);
     });
 
